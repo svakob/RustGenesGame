@@ -5,9 +5,10 @@
 const char AVAILABLE_GENES[]{ 'G','Y','H','W','X' };
 class Crop
 {
+	
+public:
 	std::string name;
 	char genes[6]{};
-public:
 	Crop(std::string name)
 	{
 		this->name = name;
