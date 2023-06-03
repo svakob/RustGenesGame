@@ -4,12 +4,12 @@
 
 class Planting_Site
 {
-	std::vector<std::vector<Crop>> plant;
+	std::vector<std::vector<Crop*>> plant;
+	unsigned short height;
+	unsigned short width;
 public:
 	Planting_Site(std::string size)
 	{
-		unsigned short height;
-		unsigned short width;
 		{
 			std::string Sheight;
 			std::string Swidth;
@@ -22,10 +22,27 @@ public:
 				throw std::invalid_argument("Invalid size");
 			}
 		}
+		// plant.assign(height, std::vector<Crop*>(width, nullptr));
 		plant.reserve(height);
-		std::for_each(plant.begin(), plant.end(), [width](std::vector<Crop> i) {i.reserve(width); });
+		for (unsigned short i = 0; i < height; i++) {
+			plant.emplace_back(std::vector<Crop*>());
+			plant[i].reserve(width);
+		}
 	}
 	void Print() {
-		std::for_each(plant.begin(), plant.end(), [](std::vector<Crop> i) {std::for_each(i.begin(), i.end(), [](Crop k) {std::cout << k.genes << '\t'; }); std::cout << '\n'; });
+		for (auto &i : plant)
+		{
+			for (auto &j : i) {
+				if (j != nullptr)
+				{
+					std::cout << j->genes << '\t';
+				}
+				else
+				{
+					std::cout << '0' << '\t';
+				}
+			}
+			std::cout << '\n';
+		}
 	}
 };

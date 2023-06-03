@@ -8,12 +8,13 @@ class Crop
 	
 public:
 	std::string name;
-	char genes[6]{};
+	char genes[7]{};
 	Crop(std::string name)
 	{
 		this->name = name;
-		for (char& i : genes) {
-			i = AVAILABLE_GENES[randrange(0, 5)];
+		for (unsigned short i = 0; i < 6; i++) {
+			genes[i] = AVAILABLE_GENES[randrange(0, 5)];
 		}
+		genes[6] = '\0';
 	}
 };
