@@ -19,25 +19,13 @@
     <Filter Include="Header Files\Content">
       <UniqueIdentifier>{b481e3de-d32a-429a-ae3f-88e2fcbd7b9d}</UniqueIdentifier>
     </Filter>
-    <Filter Include="Source Files\Content">
-      <UniqueIdentifier>{dec05b88-3081-4b55-8258-7696bc4ade74}</UniqueIdentifier>
-    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="RustGenesGame.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
-    <ClCompile Include="Utility.cpp">
-      <Filter>Source Files</Filter>
-    </ClCompile>
     <ClCompile Include="pch.cpp">
       <Filter>Precompiled headers</Filter>
-    </ClCompile>
-    <ClCompile Include="Crops.cpp">
-      <Filter>Source Files\Content</Filter>
-    </ClCompile>
-    <ClCompile Include="Planting_Sites.cpp">
-      <Filter>Source Files\Content</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
@@ -52,6 +40,9 @@
     </ClInclude>
     <ClInclude Include="Planting_Sites.h">
       <Filter>Header Files\Content</Filter>
+    </ClInclude>
+    <ClInclude Include="Configs.h">
+      <Filter>Header Files</Filter>
     </ClInclude>
   </ItemGroup>
 </Project>

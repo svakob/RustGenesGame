@@ -1,4 +1,4 @@
-#pragma once
+﻿#pragma once
 #include "pch.h"
 
 #include "Crops.h"
@@ -24,13 +24,10 @@ public:
 			}
 		}
 		plant.assign(height, std::vector<Crop*>(width, nullptr));
-		/*plant.reserve(height);
-		for (unsigned short i = 0; i < height; i++) {
-			plant.emplace_back(std::vector<Crop*>(width));
-			for (unsigned short j = 0; j < height; j++) {
-				plant[i][j] = nullptr;
-			}
-		}*/
+	}
+	~Planting_Site()
+	{
+		plant.clear();
 	}
 	void Print() {
 		for (auto& i : plant)
@@ -42,7 +39,7 @@ public:
 				}
 				else
 				{
-					std::cout << '0' << '\t';
+					std::cout << u8"∅" << '\t';
 				}
 			}
 			std::cout << '\n';

@@ -9,5 +9,7 @@
 #include <Windows.h>
 #include <string>
 #include <vector>
+#include <thread>
+#include <iostream>
 
 #endif //PCH_H
