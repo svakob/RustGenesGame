@@ -24,6 +24,7 @@ public:
 			}
 		}
 		plant.assign(height, std::vector<Crop*>(width, nullptr));
+		plant[1][1] = new Crop("Hemp");
 	}
 	~Planting_Site()
 	{
@@ -39,7 +40,7 @@ public:
 				}
 				else
 				{
-					std::cout << u8"∅" << '\t';
+					std::cout << u8"  ø   " << '\t';
 				}
 			}
 			std::cout << '\n';

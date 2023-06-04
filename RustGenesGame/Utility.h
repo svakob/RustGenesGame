@@ -9,6 +9,20 @@ int randrange(int max_number) {
 }
 void init() {
     SetConsoleOutputCP(CP_UTF8);
+    std::srand(std::time(NULL));
+}
+class Timer {
+    std::chrono::time_point<std::chrono::steady_clock> start, end;
+public:
+    Timer() {
+        start = std::chrono::high_resolution_clock::now();
+    }
+    auto stop() {
+        end = std::chrono::high_resolution_clock::now();
+        return std::chrono::duration_cast<std::chrono::milliseconds>(end - start);
+    }
+};
+void StartUp() {
     std::this_thread::sleep_for(std::chrono::seconds(1));
     std::cout << u8"Alatur soft представляє\n";
     std::this_thread::sleep_for(std::chrono::milliseconds(500));
@@ -20,5 +34,4 @@ void init() {
         std::cout << u8"■";
     }
     std::cout << "]\n";
-    std::srand(std::time(NULL));
 }
