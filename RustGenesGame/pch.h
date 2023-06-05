@@ -9,7 +9,8 @@
 #include <Windows.h>
 #include <string>
 #include <vector>
+#include <map>
 #include <thread>
-#include <iostream>
+#include <fstream>
 
 #endif //PCH_H
