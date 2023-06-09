@@ -1,19 +1,26 @@
 #pragma once
 #include "pch.h"
 const char pach[] = "configs.txt";
+const std::list<std::pair<std::string, std::string>> base_data{{"LengFile", "en"}, { "Logs", "0" }};
 class Configs {
 	std::map<std::string, std::string> data;
+	void if_not_defined_default() {
+		for (auto& i : base_data) {
+			if (std::find_if(data.begin(), data.end(), [i](const std::pair<std::string, std::string> &j) { return j.first == i.first; }) == data.end()) {
+				data[i.first] = i.second;
+				save(i);
+			}
+		}
+	}
 public:
 	Configs()
 	{
 		try {
 			load();
-			
+			if_not_defined_default();
 		}
 		catch(std::exception& ex){
-			data["LengFile"] = "en";
-			save();
-			
+			if_not_defined_default();
 		}
 	}
 	void save() {
@@ -21,6 +28,11 @@ public:
 		for (auto i = data.begin(); i != data.end(); i++) {
 			file << (*i).first << ':' << (*i).second << '\n';
 		}
+		file.close();
+	}
+	void save(std::pair<std::string, std::string> SingleData) {
+		std::fstream file(pach, std::ios::app);
+		file << SingleData.first << ':' << SingleData.second << '\n';
 		file.close();
 	}
 	void load() {
@@ -37,5 +49,10 @@ public:
 			}
 		}
 		file.close();
+	}
+	void Print() {
+		for (auto& i : data) {
+			std::cout << i.first << ":" << i.second << '\n';
+		}
 	}
 };

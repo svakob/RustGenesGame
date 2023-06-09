@@ -8,5 +8,5 @@ int main()
     init();
     // StartUp();
     Configs configs;
-    
+    configs.Print();
 }

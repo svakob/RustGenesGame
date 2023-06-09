@@ -149,6 +149,7 @@
   <ItemGroup>
     <ClInclude Include="Configs.h" />
     <ClInclude Include="Crops.h" />
+    <ClInclude Include="Logs.h" />
     <ClInclude Include="pch.h" />
     <ClInclude Include="Planting_Sites.h" />
     <ClInclude Include="Utility.h" />
