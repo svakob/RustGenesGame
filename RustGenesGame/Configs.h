@@ -30,9 +30,14 @@ public:
 		}
 		file.close();
 	}
-	void save(std::pair<std::string, std::string> SingleData) {
+	void save(const std::pair<std::string, std::string> &SingleData) {
 		std::fstream file(pach, std::ios::app);
 		file << SingleData.first << ':' << SingleData.second << '\n';
+		file.close();
+	}
+	void save(const char &str) {
+		std::fstream file(pach, std::ios::app);
+		file << '\n';
 		file.close();
 	}
 	void load() {
