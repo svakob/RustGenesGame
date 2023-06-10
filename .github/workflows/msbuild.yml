@@ -42,3 +42,8 @@ jobs:
     - name: Build
       run: msbuild ${{env.SOLUTION_FILE_PATH}} /p:Configuration=${{env.BUILD_CONFIGURATION}} /m
       
+    - name: Upload Artifact
+      uses: actions/upload-artifact@v3.1.2
+      with:
+        name: main
+        path: /bin/
