@@ -42,11 +42,11 @@ jobs:
     - name: Build
       run: msbuild ${{env.SOLUTION_FILE_PATH}} /p:Configuration=${{env.BUILD_CONFIGURATION}} /m
       
-    - name: Move Artifact
-      run: mv ./RustGenesGame/x64/Release ./artifacts/
+    #- name: Move Artifact
+      #run: mv ./RustGenesGame/x64/Release ./artifacts/
       
     - name: Upload Artifact
       uses: actions/upload-artifact@v3
       with:
         name: main
-        path: /bin
+        path: ./bin
