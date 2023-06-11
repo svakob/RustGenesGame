@@ -44,8 +44,5 @@
     <ClInclude Include="Configs.h">
       <Filter>Header Files</Filter>
     </ClInclude>
-    <ClInclude Include="Logs.h">
-      <Filter>Header Files</Filter>
-    </ClInclude>
   </ItemGroup>
 </Project>

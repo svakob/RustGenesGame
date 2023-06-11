@@ -8,5 +8,6 @@ int main()
     init();
     // StartUp();
     Configs configs;
-    configs.Print();
+    Planting_Site a("5x5");
+    a.Print();
 }
