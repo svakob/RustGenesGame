@@ -1,6 +1,7 @@
 ﻿#include "pch.h"
 #include "Utility.h"
 #include "Configs.h"
+#include "LogsSaver.h"
 #include "Planting_Sites.h"
 
 int main()
@@ -8,6 +9,6 @@ int main()
     init();
     // StartUp();
     Configs configs;
-    Planting_Site a("5x5");
-    a.Print();
+    LogsSaver logsaver;
+    
 }

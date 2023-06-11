@@ -1,8 +1,9 @@
 #pragma once
 #include "pch.h"
-const char pach[] = "configs.txt";
-const std::list<std::pair<std::string, std::string>> base_data{{"LengFile", "en"}, { "Logs", "0" }};
+
 class Configs {
+	const char pach[12] = "configs.txt";
+	const std::list<std::pair<std::string, std::string>> base_data{{"LengFile", "en"}, { "Logs", "0" }};
 	std::map<std::string, std::string> data;
 	void if_not_defined_default() {
 		for (auto& i : base_data) {
@@ -19,7 +20,7 @@ public:
 			load();
 			if_not_defined_default();
 		}
-		catch(std::exception& ex){
+		catch(...){
 			if_not_defined_default();
 		}
 	}
@@ -42,7 +43,7 @@ public:
 	}
 	void load() {
 		std::fstream file(pach, std::ios::in);
-		if (!file.is_open()) { throw std::exception("Not onpend"); }
+		if (!file.is_open()) { throw; }
 		std::string line;
 		while (std::getline(file, line))
 		{
