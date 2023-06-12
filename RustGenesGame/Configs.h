@@ -4,25 +4,32 @@
 class Configs {
 	const char pach[12] = "configs.txt";
 	const std::list<std::pair<std::string, std::string>> base_data{{"LengFile", "en"}, { "Logs", "0" }};
-	std::map<std::string, std::string> data;
-	void if_not_defined_default() {
+	
+	unsigned short if_not_defined_default() {
+		unsigned short count = 0;
 		for (auto& i : base_data) {
 			if (std::find_if(data.begin(), data.end(), [i](const std::pair<std::string, std::string> &j) { return j.first == i.first; }) == data.end()) {
 				data[i.first] = i.second;
 				save(i);
+				count++;
 			}
 		}
+		return count;
 	}
 public:
+	std::map<std::string, std::string> data;
 	Configs()
 	{
-		try {
-			load();
+		if (load()){
 			if_not_defined_default();
 		}
-		catch(...){
+		else{
 			if_not_defined_default();
 		}
+	}
+	~Configs()
+	{
+		save();
 	}
 	void save() {
 		std::fstream file(pach, std::ios::out);
@@ -41,9 +48,9 @@ public:
 		file << '\n';
 		file.close();
 	}
-	void load() {
+	bool load() {
 		std::fstream file(pach, std::ios::in);
-		if (!file.is_open()) { throw; }
+		if (!file.is_open()) { return false; }
 		std::string line;
 		while (std::getline(file, line))
 		{
@@ -55,6 +62,7 @@ public:
 			}
 		}
 		file.close();
+		return false;
 	}
 	void Print() {
 		for (auto& i : data) {

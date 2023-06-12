@@ -9,6 +9,7 @@ int main()
     init();
     // StartUp();
     Configs configs;
-    LogsSaver logsaver;
-    
+    LogsSaver logsaver(configs);
+    logsaver.log(1, "message", "Preparation completed successfully");
+    return 0;
 }

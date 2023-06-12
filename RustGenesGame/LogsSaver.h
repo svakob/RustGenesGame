@@ -1,15 +1,35 @@
 #pragma once
 #include "pch.h"
+#include "Configs.h"
 
 class LogsSaver
 {
 	const char pach[9] = "logs.txt";
 	std::fstream file;
+	unsigned short loglvl;
 public:
-	LogsSaver() {
-		file.open(pach, std::ios::app);
+	LogsSaver(Configs &configs) {
+		loglvl = std::stoul((*configs.data.find("Logs")).second);
+		if (loglvl != 0)
+		{
+			file.open(pach, std::ios::app);
+		}
 	}
 	~LogsSaver() {
 		file.close();
+	}
+
+
+	void log(unsigned short lvl, const char *importance, const char *message) {
+		std::time_t now = std::time(0);
+		std::tm time;
+		localtime_s(&time, &now);
+		char datatime[28];
+		std::strftime(datatime, sizeof(datatime), "[%d.%m.%Y][%H:%M:%S]", &time);
+		const unsigned short size = sizeof(datatime) + sizeof(importance) + sizeof(message)+4;
+		std::string strtolog;
+		strtolog.reserve(size);
+		strtolog = std::string(datatime) + "[" + std::string(importance) + "][" + std::string(message) + "]\n";
+		file << strtolog;
 	}
 };
