@@ -3,9 +3,10 @@
 #include "Configs.h"
 #include "LogsSaver.h"
 #include "Language.h"
+#include "Profile.h"
 #include "Planting_Sites.h"
 
-int main()
+int main(int argc, char* argv[])
 {
     init();
     Configs configs;

@@ -6,6 +6,9 @@ class Language {
 	const std::list<std::pair<std::string, std::string>> base_data{
 		{ "init1", "presents" }, 
 		{ "init2", "Loading..." },
+		{ "save1", "It looks like you are running this game for the first time."},
+		{ "save2", "Okay, let's start." },
+		{ "save3", "Welcome back." }
 	};
 	unsigned short if_not_defined_default() {
 		unsigned short count = 0;
