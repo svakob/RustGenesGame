@@ -17,7 +17,7 @@ class Configs {
 		return count;
 	}
 public:
-	std::map<std::string, std::string> data;
+	std::unordered_map<std::string, std::string> data;
 	Configs()
 	{
 		if (load()){

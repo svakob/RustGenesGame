@@ -21,15 +21,17 @@ public:
 
 
 	void log(unsigned short lvl, const char *importance, const char *message) {
-		std::time_t now = std::time(0);
-		std::tm time;
-		localtime_s(&time, &now);
-		char datatime[28];
-		std::strftime(datatime, sizeof(datatime), "[%d.%m.%Y][%H:%M:%S]", &time);
-		const unsigned short size = sizeof(datatime) + sizeof(importance) + sizeof(message)+4;
-		std::string strtolog;
-		strtolog.reserve(size);
-		strtolog = std::string(datatime) + "[" + std::string(importance) + "][" + std::string(message) + "]\n";
-		file << strtolog;
+		if (lvl <= loglvl){
+			std::time_t now = std::time(0);
+			std::tm time;
+			localtime_s(&time, &now);
+			char datatime[28];
+			std::strftime(datatime, sizeof(datatime), "[%d.%m.%Y][%H:%M:%S]", &time);
+			const unsigned short size = sizeof(datatime) + sizeof(importance) + sizeof(message) + 4;
+			std::string strtolog;
+			strtolog.reserve(size);
+			strtolog = std::string(datatime) + "[" + std::string(importance) + "][" + std::string(message) + "]\n";
+			file << strtolog;
+		}
 	}
 };

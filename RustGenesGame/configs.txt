@@ -1,2 +1,2 @@
-LengFile:en
-Logs:1
+LengFile:ua
+Logs:0

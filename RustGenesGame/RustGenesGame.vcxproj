@@ -149,9 +149,11 @@
   <ItemGroup>
     <ClInclude Include="Configs.h" />
     <ClInclude Include="Crops.h" />
+    <ClInclude Include="Language.h" />
     <ClInclude Include="LogsSaver.h" />
     <ClInclude Include="pch.h" />
     <ClInclude Include="Planting_Sites.h" />
+    <ClInclude Include="Profile.h" />
     <ClInclude Include="Utility.h" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
