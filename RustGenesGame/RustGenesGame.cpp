@@ -16,12 +16,16 @@ int main(int argc, char* argv[])
     logsaver.log(1, "message", "Preparation completed successfully");
     Saves Users;
     if (Users.is_empty()) {
-        std::cout << (*language.data.find("save2")).second << '\n' << (*language.data.find("save3")).second << '\n' << (*language.data.find("save4")).second;
-
+        std::cout << (*language.data.find("save2")).second << '\n' << (*language.data.find("save3")).second << '\n' << (*language.data.find("save4")).second << '\t';
+        std::string name;
+        std::cin >> name;
+        Users.mkprofile(name);
+        Users.save();
     }
     else
     {
         std::cout << (*language.data.find("save1")).second << '\n';
     }
+    // system("puse");
     return 0;
 }

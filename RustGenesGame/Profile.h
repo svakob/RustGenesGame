@@ -6,33 +6,41 @@ class Profile {
 public:
 };
 
-const char savedatafilePach[5] = "save";
+
 
 struct UserData {
 	std::string name;
 	std::tm LastLogin;
 };
 class Saves {
-	unsigned short size = 5;
+	const char savedatafilePach[5] = "save";
+	const static unsigned short size = 5;
+	std::array<UserData, size> data;
 	std::fstream file;
-	std::vector<UserData> data;
+
 public:
-	Saves()
-	{
-		data.reserve(5);
+	Saves() {
 		file.open(savedatafilePach, std::ios::binary | std::ios::in);
 		if (file.is_open()) {
-			file.read(reinterpret_cast<char*>(&size), sizeof(size));
+			
 			file.close();
 		}
-		else
-		{
+		else {
 			file.open(savedatafilePach, std::ios::binary | std::ios::out);
-			file.write(reinterpret_cast<const char*>(data.data()), sizeof(int) * size);
+			file.write(reinterpret_cast<const char*>(data.data()), sizeof(UserData) * size);
 			file.close();
 		}
 	}
+
 	bool is_empty() {
-		return data.empty();
+		return std::find_if(data.begin(), data.end(), [](UserData& i) {return !i.name.empty(); }) == data.end();
+	}
+	void mkprofile(std::string name) {
+		data[0].name = name;
+	}
+	void save() {
+		file.open(savedatafilePach, std::ios::binary | std::ios::out);
+		file.write(reinterpret_cast<const char*>(data.data()), sizeof(UserData) * size);
+		file.close();
 	}
 };
