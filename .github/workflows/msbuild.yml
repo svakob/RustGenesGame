@@ -36,8 +36,22 @@ jobs:
     - name: Setup NuGet.exe for use with actions
       uses: NuGet/setup-nuget@v1.2.0
 
+    - name: Install Boost libraries
+      run: |
+        wget https://dl.bintray.com/boostorg/release/1.76.0/source/boost_1_76_0.tar.gz
+        tar xf boost_1_76_0.tar.gz
+        cd boost_1_76_0
+        ./bootstrap.sh
+        ./b2
+        sudo ./b2 install
+        cd ..
+
     - name: Restore NuGet packages
       run: nuget restore ${{env.SOLUTION_FILE_PATH}}
 
     - name: Build
       run: msbuild ${{env.SOLUTION_FILE_PATH}} /p:Configuration=${{env.BUILD_CONFIGURATION}} /m
+      env:
+        Boost_INCLUDE_DIR: /usr/local/include
+        Boost_LIBRARY_DIR: /usr/local/lib
+        Boost_LIBRARY: boost_archive
