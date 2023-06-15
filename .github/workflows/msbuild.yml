@@ -62,7 +62,7 @@ jobs:
     - name: Build
       run: msbuild ${{env.SOLUTION_FILE_PATH}} /p:Configuration=${{env.BUILD_CONFIGURATION}} /m
       env:
-        Boost_INCLUDE_DIR: ${{github.workspace}}/boost/include
+        Boost_INCLUDE_DIR: ${{github.workspace}}/boost/include/boost-1_78
         Boost_LIBRARY_DIR: ${{github.workspace}}/boost/lib
         Boost_LIBRARY: boost_archive
         
