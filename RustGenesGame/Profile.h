@@ -1,5 +1,7 @@
 #pragma once
 #include "pch.h"
+#include <boost/archive/text_oarchive.hpp>
+#include <boost/archive/text_iarchive.hpp>
 
 class Profile {
 
@@ -10,7 +12,7 @@ public:
 
 struct UserData {
 	std::string name;
-	std::tm *LastLogin;
+	time_t LastLogin;
 };
 class Saves {
 	const char savedatafilePach[5] = "save";
@@ -24,7 +26,7 @@ public:
 		if (file.is_open()) {
 			file.read((char*)data.data(), sizeof(UserData) * data.size());
 			file.close();
-		}
+	}
 		else {
 			file.open(savedatafilePach, std::ios::binary | std::ios::out);
 			file.write((char*)data.data(), sizeof(UserData) * data.size());

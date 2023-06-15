@@ -32,7 +32,7 @@ public:
 		save();
 	}
 	void save() {
-		std::fstream file(pach, std::ios::out);
+		std::fstream file(pach, std::ios::out | std::ios::trunc);
 		for (auto i = data.begin(); i != data.end(); i++) {
 			file << (*i).first << ':' << (*i).second << '\n';
 		}
