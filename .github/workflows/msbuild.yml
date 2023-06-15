@@ -50,7 +50,7 @@ jobs:
         # Whether the boost libraries are linked statically or dynamically
         link: static+shared
         # The architecture the binaries were built for
-        arch: x64
+        arch: x86
         # The dirctory to install boost into
         boost_install_dir: ${{github.workspace}}
         # Wheter to use actions/cache to improve build times
