@@ -25,6 +25,7 @@ int main(int argc, char* argv[])
     else
     {
         std::cout << (*language.data.find("save1")).second << '\n';
+        Users.print();
     }
     // system("puse");
     return 0;
