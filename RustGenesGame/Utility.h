@@ -10,7 +10,7 @@ int randrange(int max_number) {
 }
 void init() {
     SetConsoleOutputCP(CP_UTF8);
-    std::srand(std::time(0));
+    std::srand(std::time(nullptr));
 }
 class Timer {
     std::chrono::time_point<std::chrono::steady_clock> start, end;

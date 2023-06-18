@@ -8,6 +8,10 @@
 
 const unsigned short version = 1;
 
+class Profile {
+
+};
+
 struct UserData {
     std::string name;
     time_t Lastlogging;
@@ -21,7 +25,16 @@ struct UserData {
     std::string LastloggingDiff() {
         std::chrono::system_clock::time_point lastlogging = std::chrono::system_clock::from_time_t(Lastlogging);
         std::chrono::system_clock::duration diff = std::chrono::system_clock::now() - lastlogging;
-        return std::to_string(std::chrono::duration_cast<std::chrono::minutes>(diff).count());
+        if (std::chrono::duration_cast<std::chrono::minutes>(diff).count() < 60){
+            return std::to_string(std::chrono::duration_cast<std::chrono::minutes>(diff).count())+"m";
+        }
+        else if (std::chrono::duration_cast<std::chrono::hours>(diff).count() < 60)
+        {
+            return std::to_string(std::chrono::duration_cast<std::chrono::hours>(diff).count())+"h";
+        }
+        else {
+            return std::to_string(std::chrono::duration_cast<std::chrono::hours>(diff).count()%24)+"d";
+        }
     }
 };
 
@@ -65,9 +78,18 @@ public:
             save();
         }
     }
+    UserData* login(const unsigned short soket) {
+        return data.data() + soket;
+    }
     void print() {
+        std::cout << u8"¹\tname\tago\tvercion\n";
         for (unsigned short i = 0; i < 5;i++) {
-            std::cout << i + 1 << ":\t" << data[i].name << ",\t" << data[i].LastloggingDiff() << "min\t" << data[i].version << "\n";
+            if (data[i].name != "") {
+                std::cout << i + 1 << ":\t" << data[i].name << "\t" << data[i].LastloggingDiff() << "\t" << data[i].version << "\n";
+            }
+            else {
+                std::cout << i + 1 << ":\tNone\n";
+            }
         }
     }
 };
