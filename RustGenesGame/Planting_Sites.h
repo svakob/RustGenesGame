@@ -39,7 +39,7 @@ public:
 				}
 				else
 				{
-					std::cout << u8"  ø   " << '\t';
+					std::cout << "  ø   " << '\t';
 				}
 			}
 			std::cout << endl;

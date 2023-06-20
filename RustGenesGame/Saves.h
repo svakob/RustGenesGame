@@ -61,24 +61,31 @@ public:
             }
         }
     }
-
     bool is_empty() {
         return std::find_if(data.begin(), data.end(), [](SaveInfo& i) { return !i.name.empty(); }) == data.end();
     }
+    void ifndeff_folder() {
+        if (!std::filesystem::exists(savedatafilePath)) {
+            std::filesystem::create_directory(savedatafilePath);
+        }
+    }
     void mkprofile(std::string name, unsigned short slot = 0) {
-        SaveInfo new_user;
-        new_user.name = name;
-        new_user.Lastlogging = time(nullptr);
-        new_user.version = version;
-        data[slot] = new_user;
+        data[slot].name = name;
+        data[slot].Lastlogging = time(nullptr);
+        data[slot].version = version;
     }
     void save() {
+        ifndeff_folder();
         std::ofstream ofs;
         for (unsigned short i = 0; i < 5; i++) {
-            ofs.open(savedatafilePath + "save" + std::to_string(i + 1));
-            boost::archive::binary_oarchive oa(ofs);
-            oa << data[i];
-            ofs.close();
+            if (data[i].name != "") {
+                ofs.open(savedatafilePath + "save" + std::to_string(i + 1));
+                if (ofs.is_open()) {
+                    boost::archive::binary_oarchive oa(ofs);
+                    oa << data[i];
+                    ofs.close();
+                }
+            }
         }
     }
     void load() {
@@ -93,7 +100,7 @@ public:
         }
     }
     void print() {
-        std::cout << u8"¹\tname\tago\tvercion\n";
+        std::cout << "¹\tname\tago\tvercion\n";
         for (unsigned short i = 0; i < 5;i++) {
             if (data[i].name != "") {
                 std::cout << i + 1 << ":\t" << data[i].name << "\t" << data[i].LastloggingDiff() << "\t" << data[i].version << endl;

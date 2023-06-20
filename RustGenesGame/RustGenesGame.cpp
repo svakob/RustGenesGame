@@ -14,14 +14,14 @@ int main(int argc, char* argv[])
     Configs configs;
     LogsSaver logsaver(configs);
     Language language(configs);
-    //StartUp(language);
+    // StartUp(language);
     logsaver.log(1, "message", "Preparation completed successfully");
     Saves saves;
     if (saves.is_empty()) {
         std::cout << (*language.data.find("save2")).second << endl << (*language.data.find("save3")).second << endl << (*language.data.find("save4")).second << '\t';
         std::string name = getline();
         std::cout << name;
-        // saves.mkprofile(name);
+        saves.mkprofile(name);
         saves.save();
     }
     /*else

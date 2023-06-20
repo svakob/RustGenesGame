@@ -41,8 +41,8 @@ void StartUp(Language &language) {
     std::this_thread::sleep_for(std::chrono::seconds(1));
     std::cout << (*language.data.find("init2")).second << "\t[";
     for (int i = 0; i < 100; i++) {
-        std::this_thread::sleep_for(std::chrono::milliseconds(25));
-        std::cout << u8"■";
+        std::this_thread::sleep_for(std::chrono::milliseconds(10));
+        std::cout << "|";
     }
     std::cout << "]\n";
 }
