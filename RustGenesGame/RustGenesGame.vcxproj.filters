@@ -47,7 +47,7 @@
     <ClInclude Include="LogsSaver.h">
       <Filter>Header Files</Filter>
     </ClInclude>
-    <ClInclude Include="Profile.h">
+    <ClInclude Include="Saves.h">
       <Filter>Header Files</Filter>
     </ClInclude>
     <ClInclude Include="Language.h">

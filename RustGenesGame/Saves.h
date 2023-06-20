@@ -6,13 +6,15 @@
 #include <boost/serialization/string.hpp>
 #include <boost/serialization/vector.hpp>
 
+#define endl '\n'
+
 const unsigned short version = 1;
 
-class Profile {
+struct SaveData {
 
 };
 
-struct UserData {
+struct SaveInfo {
     std::string name;
     time_t Lastlogging;
     unsigned short version;
@@ -38,34 +40,46 @@ struct UserData {
     }
 };
 
-BOOST_CLASS_VERSION(UserData, 0)
+BOOST_CLASS_VERSION(SaveInfo, 1)
 
 class Saves {
-    const char savedatafilePath[5] = "save";
-    std::vector<UserData> data;
-    std::fstream file;
+    const std::string savedatafilePath = "save/";
+    std::vector<SaveInfo> data{5};
 
+
+    
 public:
     Saves() {
-        data.resize(5);
-        load();
+        std::ifstream ifs;
+        for (unsigned short i = 0; i < 5; i++) {
+            ifs.open(savedatafilePath + "save" + std::to_string(i + 1));
+            if (ifs.is_open())
+            {
+                boost::archive::binary_iarchive ia(ifs);
+                ia >> data[i];
+                ifs.close();
+            }
+        }
     }
 
     bool is_empty() {
-        return std::find_if(data.begin(), data.end(), [](UserData& i) { return !i.name.empty(); }) == data.end();
+        return std::find_if(data.begin(), data.end(), [](SaveInfo& i) { return !i.name.empty(); }) == data.end();
     }
     void mkprofile(std::string name, unsigned short slot = 0) {
-        UserData new_user;
+        SaveInfo new_user;
         new_user.name = name;
         new_user.Lastlogging = time(nullptr);
         new_user.version = version;
         data[slot] = new_user;
     }
     void save() {
-        std::ofstream ofs(savedatafilePath);
-        boost::archive::binary_oarchive oa(ofs);
-        oa << data;
-        ofs.close();
+        std::ofstream ofs;
+        for (unsigned short i = 0; i < 5; i++) {
+            ofs.open(savedatafilePath + "save" + std::to_string(i + 1));
+            boost::archive::binary_oarchive oa(ofs);
+            oa << data[i];
+            ofs.close();
+        }
     }
     void load() {
         std::ifstream ifs(savedatafilePath);
@@ -78,14 +92,11 @@ public:
             save();
         }
     }
-    UserData* login(const unsigned short soket) {
-        return data.data() + soket;
-    }
     void print() {
         std::cout << u8"¹\tname\tago\tvercion\n";
         for (unsigned short i = 0; i < 5;i++) {
             if (data[i].name != "") {
-                std::cout << i + 1 << ":\t" << data[i].name << "\t" << data[i].LastloggingDiff() << "\t" << data[i].version << "\n";
+                std::cout << i + 1 << ":\t" << data[i].name << "\t" << data[i].LastloggingDiff() << "\t" << data[i].version << endl;
             }
             else {
                 std::cout << i + 1 << ":\tNone\n";

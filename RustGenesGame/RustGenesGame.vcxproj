@@ -161,7 +161,7 @@
     <ClInclude Include="LogsSaver.h" />
     <ClInclude Include="pch.h" />
     <ClInclude Include="Planting_Sites.h" />
-    <ClInclude Include="Profile.h" />
+    <ClInclude Include="Saves.h" />
     <ClInclude Include="Utility.h" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />

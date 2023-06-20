@@ -42,7 +42,7 @@ public:
 					std::cout << u8"  ø   " << '\t';
 				}
 			}
-			std::cout << '\n';
+			std::cout << endl;
 		}
 	}
 };

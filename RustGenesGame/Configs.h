@@ -1,6 +1,8 @@
 #pragma once
 #include "pch.h"
 
+#define endl '\n'
+
 class Configs {
 	const char pach[12] = "configs.txt";
 	const std::list<std::pair<std::string, std::string>> base_data{{"LengFile", "en"}, { "Logs", "0" }};
@@ -34,18 +36,18 @@ public:
 	void save() {
 		std::fstream file(pach, std::ios::out | std::ios::trunc);
 		for (auto i = data.begin(); i != data.end(); i++) {
-			file << (*i).first << ':' << (*i).second << '\n';
+			file << (*i).first << ':' << (*i).second << endl;
 		}
 		file.close();
 	}
 	void save(const std::pair<std::string, std::string> &SingleData) {
 		std::fstream file(pach, std::ios::app);
-		file << SingleData.first << ':' << SingleData.second << '\n';
+		file << SingleData.first << ':' << SingleData.second << endl;
 		file.close();
 	}
 	void save(const char &str) {
 		std::fstream file(pach, std::ios::app);
-		file << '\n';
+		file << endl;
 		file.close();
 	}
 	bool load() {
@@ -66,7 +68,7 @@ public:
 	}
 	void Print() {
 		for (auto& i : data) {
-			std::cout << i.first << ":" << i.second << '\n';
+			std::cout << i.first << ":" << i.second << endl;
 		}
 	}
 };
