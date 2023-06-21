@@ -52,7 +52,7 @@ public:
     Saves() {
         std::ifstream ifs;
         for (unsigned short i = 0; i < 5; i++) {
-            ifs.open(savedatafilePath + "save" + std::to_string(i + 1));
+            ifs.open(savedatafilePath + "save" + std::to_string(i + 1) + ".si");
             if (ifs.is_open())
             {
                 boost::archive::binary_iarchive ia(ifs);
@@ -79,7 +79,7 @@ public:
         std::ofstream ofs;
         for (unsigned short i = 0; i < 5; i++) {
             if (data[i].name != "") {
-                ofs.open(savedatafilePath + "save" + std::to_string(i + 1));
+                ofs.open(savedatafilePath + "save" + std::to_string(i + 1) + ".si");
                 if (ofs.is_open()) {
                     boost::archive::binary_oarchive oa(ofs);
                     oa << data[i];

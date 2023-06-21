@@ -4,6 +4,8 @@
 
 #define endl '\n'
 
+int consoleCP = 65001;
+
 int randrange(int minimum_number, int max_number) {
     return (rand() % (max_number + 1 - minimum_number)) + minimum_number;
 }
@@ -11,11 +13,16 @@ int randrange(int max_number) {
     return (rand() % (max_number + 1));
 }
 std::string getline() {
-    SetConsoleCP(1251);
+    SetConsoleCP(consoleCP);
     std::string str;
     std::cin >> str;
     SetConsoleCP(CP_UTF8);
     return str;
+}
+void writeline(std::string &str) {
+    SetConsoleOutputCP(consoleCP);
+    std::cout << str;
+    SetConsoleOutputCP(CP_UTF8);
 }
 void init() {
     SetConsoleOutputCP(CP_UTF8);

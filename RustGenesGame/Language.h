@@ -24,6 +24,8 @@ class Language {
 		std::fstream file(pach, std::ios::in);
 		if (!file.is_open()) { return false; }
 		std::string line;
+		std::getline(file, line);
+		consoleCP = std::stoi(line);
 		while (std::getline(file, line))
 		{
 			auto it = std::find(line.begin(), line.end(), ':');
@@ -37,6 +39,7 @@ class Language {
 		return false;
 	}
 public:
+	int consoleCP;
 	std::unordered_map<std::string, std::string> data;
 	Language(Configs configs)
 	{
