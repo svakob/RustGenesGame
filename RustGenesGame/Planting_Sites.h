@@ -3,6 +3,8 @@
 
 #include "Crops.h"
 
+#define tab '\t'
+
 class Planting_Site
 {
 	std::vector<std::vector<Crop*>> plant;
@@ -35,11 +37,11 @@ public:
 			for (auto& j : i) {
 				if (j != nullptr)
 				{
-					std::cout << j->genes << '\t';
+					std::cout << j->genes << tab;
 				}
 				else
 				{
-					std::cout << "  ø   " << '\t';
+					std::cout << "  ø   " << tab;
 				}
 			}
 			std::cout << endl;

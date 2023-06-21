@@ -43,7 +43,7 @@ public:
 	std::unordered_map<std::string, std::string> data;
 	Language(Configs configs)
 	{
-		pach = (*configs.data.find("LengFile")).second;
+		pach = configs.data["LengFile"];
 		load();
 		if_not_defined_default();
 	}

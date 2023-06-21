@@ -9,7 +9,7 @@ class LogsSaver
 	unsigned short loglvl;
 public:
 	LogsSaver(Configs &configs) {
-		loglvl = std::stoul((*configs.data.find("Logs")).second);
+		loglvl = std::stoul(configs.data["Logs"]);
 		if (loglvl != 0)
 		{
 			file.open(pach, std::ios::app);

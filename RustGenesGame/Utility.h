@@ -24,6 +24,11 @@ void writeline(std::string &str) {
     std::cout << str;
     SetConsoleOutputCP(CP_UTF8);
 }
+void writeline(std::string str) {
+    SetConsoleOutputCP(consoleCP);
+    std::cout << str;
+    SetConsoleOutputCP(CP_UTF8);
+}
 void init() {
     SetConsoleOutputCP(CP_UTF8);
     SetConsoleCP(CP_UTF8);
@@ -42,11 +47,11 @@ public:
 };
 void StartUp(Language &language) {
     std::this_thread::sleep_for(std::chrono::seconds(1));
-    std::cout << "Alatur soft " << (*language.data.find("init1")).second << endl;
+    std::cout << "Alatur soft " << language.data["init1"] << endl;
     std::this_thread::sleep_for(std::chrono::milliseconds(500));
     std::cout << "RustGenesGame" << endl;
     std::this_thread::sleep_for(std::chrono::seconds(1));
-    std::cout << (*language.data.find("init2")).second << "\t[";
+    std::cout << language.data["init2"] << "\t[";
     for (int i = 0; i < 100; i++) {
         std::this_thread::sleep_for(std::chrono::milliseconds(10));
         std::cout << "|";

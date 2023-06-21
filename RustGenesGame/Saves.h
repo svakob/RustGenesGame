@@ -45,20 +45,16 @@ BOOST_CLASS_VERSION(SaveInfo, 1)
 class Saves {
     const std::string savedatafilePath = "save/";
     std::vector<SaveInfo> data{5};
+    unsigned short current_slot = 0;
 
-
-    
 public:
     Saves() {
-        std::ifstream ifs;
-        for (unsigned short i = 0; i < 5; i++) {
-            ifs.open(savedatafilePath + "save" + std::to_string(i + 1) + ".si");
-            if (ifs.is_open())
-            {
-                boost::archive::binary_iarchive ia(ifs);
-                ia >> data[i];
-                ifs.close();
-            }
+        load();
+    }
+    ~Saves()
+    {
+        if (current_slot != 50) {
+            logout();
         }
     }
     bool is_empty() {
@@ -69,10 +65,11 @@ public:
             std::filesystem::create_directory(savedatafilePath);
         }
     }
-    void mkprofile(std::string name, unsigned short slot = 0) {
-        data[slot].name = name;
-        data[slot].Lastlogging = time(nullptr);
-        data[slot].version = version;
+    void mkprofile(std::string &name) {
+        data[current_slot].name = name;
+        data[current_slot].Lastlogging = time(nullptr);
+        data[current_slot].version = version;
+        current_slot = current_slot;
     }
     void save() {
         ifndeff_folder();
@@ -89,21 +86,33 @@ public:
         }
     }
     void load() {
-        std::ifstream ifs(savedatafilePath);
-        if (ifs.is_open()) {
-            boost::archive::binary_iarchive ia(ifs);
-            ia >> data;
-            ifs.close();
-        }
-        else {
-            save();
+        std::ifstream ifs;
+        for (unsigned short i = 0; i < 5; i++) {
+            ifs.open(savedatafilePath + "save" + std::to_string(i + 1) + ".si");
+            if (ifs.is_open())
+            {
+                boost::archive::binary_iarchive ia(ifs);
+                ia >> data[i];
+                ifs.close();
+            }
         }
     }
+    void login(unsigned short slot) {
+        current_slot = slot;
+    }
+    void logout() {
+        data[current_slot].Lastlogging = time(nullptr);
+        save();
+        current_slot = 50;
+    }
+    bool is_empty_current() {
+        return data[current_slot].name.empty();
+    }
     void print() {
-        std::cout << "¹\tname\tago\tvercion\n";
+        std::cout << "N\tname\tago\tversion\n";
         for (unsigned short i = 0; i < 5;i++) {
             if (data[i].name != "") {
-                std::cout << i + 1 << ":\t" << data[i].name << "\t" << data[i].LastloggingDiff() << "\t" << data[i].version << endl;
+                writeline(std::to_string(i + 1) + ":\t" + data[i].name + "\t" + data[i].LastloggingDiff() + "\t" + std::to_string(data[i].version) + endl);
             }
             else {
                 std::cout << i + 1 << ":\tNone\n";
