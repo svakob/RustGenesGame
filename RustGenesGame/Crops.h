@@ -9,6 +9,10 @@ class Crop
 public:
 	std::string name;
 	char genes[7]{};
+	Crop()
+	{
+
+	}
 	Crop(std::string name)
 	{
 		this->name = name;
@@ -17,4 +21,11 @@ public:
 		}
 		genes[6] = '\0';
 	}
+	friend class boost::serialization::access;
+	template <typename Archive> void serialize(Archive& ar, const unsigned int version) {
+		ar& name;
+		ar& genes;
+	}
 };
+
+BOOST_CLASS_VERSION(Crop, 1)

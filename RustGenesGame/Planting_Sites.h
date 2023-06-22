@@ -1,6 +1,6 @@
 ﻿#pragma once
 #include "pch.h"
-
+#include "Utility.h"
 #include "Crops.h"
 
 #define tab '\t'
@@ -11,6 +11,10 @@ class Planting_Site
 	unsigned short height;
 	unsigned short width;
 public:
+	Planting_Site()
+	{
+
+	}
 	Planting_Site(std::string size)
 	{
 		{
@@ -31,6 +35,12 @@ public:
 	{
 		plant.clear();
 	}
+	friend class boost::serialization::access;
+	template <typename Archive> void serialize(Archive& ar, const unsigned int version) {
+		ar& plant;
+		ar& height;
+		ar& width;
+	}
 	void Print() {
 		for (auto& i : plant)
 		{
@@ -41,10 +51,13 @@ public:
 				}
 				else
 				{
-					std::cout << "  ø   " << tab;
+					writeline("  ø   " + tab);
 				}
 			}
 			std::cout << endl;
 		}
 	}
+
 };
+
+BOOST_CLASS_VERSION(Planting_Site, 1)

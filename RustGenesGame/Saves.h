@@ -1,25 +1,34 @@
 #pragma once
 #include "pch.h"
-#include <boost/archive/binary_oarchive.hpp>
-#include <boost/archive/binary_iarchive.hpp>
-#include <boost/serialization/version.hpp>
-#include <boost/serialization/string.hpp>
-#include <boost/serialization/vector.hpp>
+#include "Crops.h"
+#include "Planting_Sites.h"
 
 #define endl '\n'
 
 const unsigned short version = 1;
 
 struct SaveData {
-
+    unsigned short scrap;
+    unsigned short seeds;
+    std::vector<Crop> clons;
+    std::vector<Planting_Site> planting_sites;
+    friend class boost::serialization::access;
+    template <typename Archive> void serialize(Archive& ar, const unsigned int version) {
+        ar& scrap;
+        ar& seeds;
+        ar& clons;
+        ar& planting_sites;
+    }
 };
+
+BOOST_CLASS_VERSION(SaveData, 1)
 
 struct SaveInfo {
     std::string name;
     time_t Lastlogging;
     unsigned short version;
-    template <typename Archive>
-    void serialize(Archive& ar, const unsigned int version) {
+    friend class boost::serialization::access;
+    template <typename Archive> void serialize(Archive& ar, const unsigned int version) {
         ar& name;
         ar& Lastlogging;
         ar& this->version;
@@ -47,9 +56,12 @@ class Saves {
     std::vector<SaveInfo> data{5};
     unsigned short current_slot = 0;
 
+    SaveData current_data;
+
 public:
     Saves() {
         load();
+        if_not_all_data_thear_delete();
     }
     ~Saves()
     {
@@ -69,7 +81,9 @@ public:
         data[current_slot].name = name;
         data[current_slot].Lastlogging = time(nullptr);
         data[current_slot].version = version;
-        current_slot = current_slot;
+        current_data.scrap = 0;
+        current_data.seeds = 0;
+        save_data();
     }
     void save() {
         ifndeff_folder();
@@ -95,6 +109,33 @@ public:
                 ia >> data[i];
                 ifs.close();
             }
+        }
+    }
+    void if_not_all_data_thear_delete() {
+        for (int i = 0; i < 5; i++) {
+            if (data[i].name != "")
+            {
+                std::ifstream ifs(savedatafilePath + "save" + std::to_string(i+1) + ".sd");
+                if (!ifs.is_open()) {
+                    data[i].name = "";
+                    std::remove((savedatafilePath + "save" + std::to_string(i + 1) + ".si").data());
+                }
+            }
+        }
+    }
+    void save_data() {
+        ifndeff_folder();
+        std::ofstream ofs(savedatafilePath + "save" + std::to_string(current_slot + 1) + ".sd");
+        boost::archive::binary_oarchive oa(ofs);
+        oa << current_data;
+        ofs.close();
+    }
+    void load_data() {
+        std::ifstream ifs(savedatafilePath + "save" + std::to_string(current_slot + 1) + ".sd");
+        if (ifs.is_open()) {
+            boost::archive::binary_iarchive ia(ifs);
+            ia >> current_data;
+            ifs.close();
         }
     }
     void login(unsigned short slot) {

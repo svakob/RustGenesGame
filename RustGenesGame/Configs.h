@@ -4,7 +4,7 @@
 #define endl '\n'
 
 class Configs {
-	const char pach[12] = "configs.txt";
+	const char pach[12] = "configs.cfg";
 	const std::list<std::pair<std::string, std::string>> base_data{{"LengFile", "en"}, { "Logs", "0" }};
 	
 	unsigned short if_not_defined_default() {
