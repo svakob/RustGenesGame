@@ -58,6 +58,34 @@ class Saves {
 
     SaveData current_data;
 
+    void ifndeff_folder() {
+        if (!std::filesystem::exists(savedatafilePath)) {
+            std::filesystem::create_directory(savedatafilePath);
+        }
+    }
+    void if_not_all_data_thear_delete() {
+        for (int i = 0; i < 5; i++) {
+            if (data[i].name != "")
+            {
+                std::ifstream ifs(savedatafilePath + "save" + std::to_string(i + 1) + ".sd");
+                if (!ifs.is_open()) {
+                    data[i].name = "";
+                    std::remove((savedatafilePath + "save" + std::to_string(i + 1) + ".si").data());
+                }
+            }
+            else {
+                std::ifstream ifs(savedatafilePath + "save" + std::to_string(i + 1) + ".sd");
+                if (ifs.is_open()) {
+                    data[i].name = "Not defined";
+                    data[i].version = version;
+                    data[i].Lastlogging = time(nullptr);
+                    save();
+                }
+            }
+        }
+    }
+
+
 public:
     Saves() {
         load();
@@ -65,18 +93,14 @@ public:
     }
     ~Saves()
     {
-        if (current_slot != 50) {
+        if (current_slot != 5) {
             logout();
         }
     }
     bool is_empty() {
         return std::find_if(data.begin(), data.end(), [](SaveInfo& i) { return !i.name.empty(); }) == data.end();
     }
-    void ifndeff_folder() {
-        if (!std::filesystem::exists(savedatafilePath)) {
-            std::filesystem::create_directory(savedatafilePath);
-        }
-    }
+    
     void mkprofile(std::string &name) {
         data[current_slot].name = name;
         data[current_slot].Lastlogging = time(nullptr);
@@ -111,18 +135,7 @@ public:
             }
         }
     }
-    void if_not_all_data_thear_delete() {
-        for (int i = 0; i < 5; i++) {
-            if (data[i].name != "")
-            {
-                std::ifstream ifs(savedatafilePath + "save" + std::to_string(i+1) + ".sd");
-                if (!ifs.is_open()) {
-                    data[i].name = "";
-                    std::remove((savedatafilePath + "save" + std::to_string(i + 1) + ".si").data());
-                }
-            }
-        }
-    }
+    
     void save_data() {
         ifndeff_folder();
         std::ofstream ofs(savedatafilePath + "save" + std::to_string(current_slot + 1) + ".sd");
@@ -144,7 +157,7 @@ public:
     void logout() {
         data[current_slot].Lastlogging = time(nullptr);
         save();
-        current_slot = 50;
+        current_slot = 5;
     }
     bool is_empty_current() {
         return data[current_slot].name.empty();
