@@ -169,10 +169,7 @@ public:
     bool is_empty_current() {
         return data[current_slot].name.empty();
     }
-    void change_name(std::string &name) {
-        data[current_slot].name = name;
-    }
-    void rename(std::string name) {
+    void rename(std::string &name) {
         data[current_slot].name = name;
         save();
     }

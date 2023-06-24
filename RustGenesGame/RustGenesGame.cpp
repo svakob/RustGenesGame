@@ -11,23 +11,23 @@
 
 void if_empty_create(Language &language, Saves &saves) {
 	if (saves.is_empty()) {
-		std::cout << language.data["save2"] << endl << language.data["save3"] << endl << language.data["save4"] << tab;
+		std::cout << language["save2"] << endl << language["save3"] << endl << language["save4"] << tab;
 		std::string name = getline();
 		saves.mkprofile(name);
 		saves.save();
 	}
 }
 bool welcome_back(Language& language, Saves& saves) {
-	std::cout << language.data["save1"] << endl;
+	std::cout << language["save1"] << endl;
 	if (!saves.qincorrect_names.empty()) {
 		saves.print();
-		std::cout << language.data["save10"] << endl;
+		std::cout << language["save10"] << endl;
 		while (true) {
 			std::cout << saves.qincorrect_names.front() << ":\t";
 			std::string input = getline();
 			if (input != "0") {
 				saves.login(saves.qincorrect_names.front() - 1);
-				saves.change_name(input);
+				saves.rename(input);
 				saves.qincorrect_names.pop();
 			}
 			else
@@ -41,20 +41,20 @@ bool welcome_back(Language& language, Saves& saves) {
 	}
 
 	saves.print();
-	std::cout << language.data["save5"] << endl << language.data["save6"] + "\t";
+	std::cout << language["save5"] << endl << language["save6"] + "\t";
 	char inputvalue;
 	std::cin >> inputvalue;
 	int number = atoi(&inputvalue) - 1;
 	if (number >= 0 && number <= 4) {
 		saves.login(number);
 		if (saves.is_empty_current()) {
-			std::cout << language.data["save8"] << endl << language.data["save9"] << tab;
+			std::cout << language["save8"] << endl << language["save9"] << tab;
 			std::string name = getline();
 			saves.mkprofile(name);
 			saves.save();
 			return false;
 		}
-		std::cout << language.data["save11"] << endl << language.data["save12"] << endl << language.data["save13"] << endl << language.data["save14"] << endl;
+		std::cout << language["save11"] << endl << language["save12"] << endl << language["save13"] << endl << language["save14"] << endl;
 		char inputvalue;
 		std::cin >> inputvalue;
 		if (inputvalue == '1') {
@@ -62,14 +62,14 @@ bool welcome_back(Language& language, Saves& saves) {
 			return true;
 		}
 		else if (inputvalue == '2') {
-			std::cout << language.data["save9"] << tab;
+			std::cout << language["save9"] << tab;
 			std::string name = getline();
 			if (name != "0") {
 				saves.rename(name);
 			}
 		}
 		else if (inputvalue == '3') {
-			std::cout << language.data["save15"] << tab;
+			std::cout << language["save15"] << tab;
 			char confirmation;
 			std::cin >> confirmation;
 			if (confirmation == '1') {
@@ -82,7 +82,7 @@ bool welcome_back(Language& language, Saves& saves) {
 	}
 	else
 	{
-		std::cout << language.data["save7"] << endl;
+		std::cout << language["save7"] << endl;
 		welcome_back(language, saves);
 	}
 
@@ -94,8 +94,8 @@ int main(int argc, char* argv[])
 	Configs configs;
 	LogsSaver logsaver(configs);
 	Language language(configs);
-	consoleCP = language.consoleCP;
-	// StartUp(language);
+	consoleCP = language.getCP();
+	StartUp(language);
 	logsaver.log(1, "message", "Preparation completed successfully");
 	Saves saves;
 

@@ -10,6 +10,9 @@ class Language {
 		{ "save2", "Okay, let's start." },
 		{ "save3", "Welcome back." }
 	};
+	int consoleCP;
+	std::unordered_map<std::string, std::string> data;
+
 	unsigned short if_not_defined_default() {
 		unsigned short count = 0;
 		for (auto& i : base_data) {
@@ -39,12 +42,20 @@ class Language {
 		return false;
 	}
 public:
-	int consoleCP;
-	std::unordered_map<std::string, std::string> data;
+	
 	Language(Configs configs)
 	{
-		pach = configs.data["LengFile"];
+		pach = configs["LengFile"];
 		load();
 		if_not_defined_default();
+	}
+	int getCP() {
+		return consoleCP;
+	}
+	std::string& operator[](std::string& value) {
+		return data[value];
+	}
+	std::string& operator[](const char* value) {
+		return data[value];
 	}
 };

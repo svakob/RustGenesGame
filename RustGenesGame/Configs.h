@@ -5,11 +5,12 @@
 
 class Configs {
 	const char pach[12] = "configs.cfg";
-	const std::list<std::pair<std::string, std::string>> base_data{{"LengFile", "en"}, { "Logs", "0" }};
-	
+	const std::list<std::pair<std::string, std::string>> default_data{{"LengFile", "en"}, { "Logs", "0" }};
+	std::unordered_map<std::string, std::string> data;
+
 	unsigned short if_not_defined_default() {
 		unsigned short count = 0;
-		for (auto& i : base_data) {
+		for (auto& i : default_data) {
 			if (std::find_if(data.begin(), data.end(), [i](const std::pair<std::string, std::string> &j) { return j.first == i.first; }) == data.end()) {
 				data[i.first] = i.second;
 				save(i);
@@ -19,7 +20,6 @@ class Configs {
 		return count;
 	}
 public:
-	std::unordered_map<std::string, std::string> data;
 	Configs()
 	{
 		if (load()){
@@ -32,6 +32,12 @@ public:
 	~Configs()
 	{
 		save();
+	}
+	std::string& operator[](std::string & value) {
+		return data[value];
+	}
+	std::string& operator[](const char* value) {
+		return data[value];
 	}
 	void save() {
 		std::fstream file(pach, std::ios::out | std::ios::trunc);

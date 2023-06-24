@@ -46,15 +46,6 @@ public:
     }
 };
 void StartUp(Language &language) {
-    std::this_thread::sleep_for(std::chrono::seconds(1));
-    std::cout << "Alatur soft " << language.data["init1"] << endl;
-    std::this_thread::sleep_for(std::chrono::milliseconds(500));
+    std::cout << "Alatur soft " << language["init1"] << endl;
     std::cout << "RustGenesGame" << endl;
-    std::this_thread::sleep_for(std::chrono::seconds(1));
-    std::cout << language.data["init2"] << "\t[";
-    for (int i = 0; i < 100; i++) {
-        std::this_thread::sleep_for(std::chrono::milliseconds(10));
-        std::cout << "|";
-    }
-    std::cout << "]\n";
 }
