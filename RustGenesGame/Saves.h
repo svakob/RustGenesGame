@@ -39,12 +39,12 @@ struct SaveInfo {
         if (std::chrono::duration_cast<std::chrono::minutes>(diff).count() < 60){
             return std::to_string(std::chrono::duration_cast<std::chrono::minutes>(diff).count())+"m";
         }
-        else if (std::chrono::duration_cast<std::chrono::hours>(diff).count() < 60)
+        else if (std::chrono::duration_cast<std::chrono::hours>(diff).count() < 24)
         {
             return std::to_string(std::chrono::duration_cast<std::chrono::hours>(diff).count())+"h";
         }
         else {
-            return std::to_string(std::chrono::duration_cast<std::chrono::hours>(diff).count()%24)+"d";
+            return std::to_string(std::chrono::duration_cast<std::chrono::hours>(diff).count()/24)+"d";
         }
     }
 };
@@ -55,6 +55,7 @@ class Saves {
     const std::string savedatafilePath = "save/";
     std::vector<SaveInfo> data{5};
     unsigned short current_slot = 0;
+    bool loaded = false;
 
     SaveData current_data;
 
@@ -96,7 +97,7 @@ public:
     }
     ~Saves()
     {
-        if (current_slot != 5) {
+        if (current_slot != 5 && loaded) {
             logout();
         }
     }
@@ -157,6 +158,9 @@ public:
     void login(unsigned short slot) {
         current_slot = slot;
     }
+    void login(bool load, int) {
+        loaded = load;
+    }
     void logout() {
         data[current_slot].Lastlogging = time(nullptr);
         save();
@@ -167,6 +171,16 @@ public:
     }
     void change_name(std::string &name) {
         data[current_slot].name = name;
+    }
+    void rename(std::string name) {
+        data[current_slot].name = name;
+        save();
+    }
+    void remove_save() {
+        std::remove((savedatafilePath + "save" + std::to_string(current_slot + 1) + ".sd").data());
+        std::remove((savedatafilePath + "save" + std::to_string(current_slot + 1) + ".si").data());
+        data[current_slot].name = "";
+        current_slot = 0;
     }
     void print() {
         std::cout << "N\tname\tago\tversion\n";
