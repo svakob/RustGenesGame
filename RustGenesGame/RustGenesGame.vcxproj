@@ -165,6 +165,7 @@
   <ItemGroup>
     <ClInclude Include="Configs.h" />
     <ClInclude Include="Crops.h" />
+    <ClInclude Include="Game.h" />
     <ClInclude Include="Language.h" />
     <ClInclude Include="LogsSaver.h" />
     <ClInclude Include="pch.h" />

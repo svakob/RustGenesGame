@@ -160,10 +160,12 @@ public:
     }
     void login(bool load, int) {
         loaded = load;
+        load_data();
     }
     void logout() {
         data[current_slot].Lastlogging = time(nullptr);
         save();
+        save_data();
         current_slot = 5;
     }
     bool is_empty_current() {
@@ -178,6 +180,9 @@ public:
         std::remove((savedatafilePath + "save" + std::to_string(current_slot + 1) + ".si").data());
         data[current_slot].name = "";
         current_slot = 0;
+    }
+    SaveData& getdata() {
+        return current_data;
     }
     void print() {
         std::cout << "N\tname\tago\tversion\n";

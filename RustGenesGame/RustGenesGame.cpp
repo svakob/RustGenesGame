@@ -5,6 +5,7 @@
 #include "Language.h"
 #include "Saves.h"
 #include "Planting_Sites.h"
+#include "Game.h"
 
 #define endl '\n'
 #define tab '\t'
@@ -98,7 +99,6 @@ int main(int argc, char* argv[])
 	StartUp(language);
 	logsaver.log(1, "message", "Preparation completed successfully");
 	Saves saves;
-
 	while (true)
 	{
 		if_empty_create(language, saves);
@@ -106,6 +106,8 @@ int main(int argc, char* argv[])
 			break;
 		}
 	}
+	Game game(configs, logsaver, language, saves.getdata());
+
 	
 
 
