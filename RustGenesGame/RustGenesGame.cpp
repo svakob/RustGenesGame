@@ -19,6 +19,7 @@ int main(int argc, char* argv[])
     // StartUp(language);
     logsaver.log(1, "message", "Preparation completed successfully");
     Saves saves;
+    
     if (saves.is_empty()) {
         std::cout << language.data["save2"] << endl << language.data["save3"] << endl << language.data["save4"] << tab;
         std::string name = getline();
@@ -28,6 +29,26 @@ int main(int argc, char* argv[])
     else
     {
         std::cout << language.data["save1"] << endl;
+        if (!saves.qincorrect_names.empty()) {
+            saves.print();
+            std::cout << language.data["save10"] << endl;
+            while (true) {
+                std::cout << saves.qincorrect_names.front() << ":\t";
+                std::string input = getline();
+                if (input != "0") {
+                    saves.login(saves.qincorrect_names.front()-1);
+                    saves.change_name(input);
+                    saves.qincorrect_names.pop();
+                }
+                else
+                {
+                    saves.qincorrect_names.pop();
+                }
+                if (saves.qincorrect_names.empty()) {
+                    break;
+                }
+            }
+        }
         while (true)
         {
             saves.print();
@@ -53,6 +74,7 @@ int main(int argc, char* argv[])
         }
     }
     std::cout << language.data["init2"] << endl;
+
     // std::this_thread::sleep_for(std::chrono::seconds(1));
 
     

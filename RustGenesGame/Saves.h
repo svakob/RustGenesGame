@@ -80,6 +80,7 @@ class Saves {
                     data[i].version = version;
                     data[i].Lastlogging = time(nullptr);
                     save();
+                    qincorrect_names.push(i+1);
                 }
             }
         }
@@ -87,6 +88,8 @@ class Saves {
 
 
 public:
+    std::queue<unsigned short, std::list<unsigned short>> qincorrect_names;
+
     Saves() {
         load();
         if_not_all_data_thear_delete();
@@ -161,6 +164,9 @@ public:
     }
     bool is_empty_current() {
         return data[current_slot].name.empty();
+    }
+    void change_name(std::string &name) {
+        data[current_slot].name = name;
     }
     void print() {
         std::cout << "N\tname\tago\tversion\n";

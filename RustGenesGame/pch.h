@@ -13,7 +13,8 @@
 #include <thread>
 #include <fstream>
 #include <filesystem>
-#include<stdio.h>
+#include <stdio.h>
+#include <queue>
 #include <boost/archive/binary_oarchive.hpp>
 #include <boost/archive/binary_iarchive.hpp>
 #include <boost/serialization/version.hpp>
