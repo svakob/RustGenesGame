@@ -2,8 +2,6 @@
 #include "pch.h"
 #include "Language.h"
 
-#define endl '\n'
-
 int consoleCP = 65001;
 
 int randrange(int minimum_number, int max_number) {

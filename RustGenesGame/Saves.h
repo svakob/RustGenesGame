@@ -3,18 +3,20 @@
 #include "Crops.h"
 #include "Planting_Sites.h"
 
-#define endl '\n'
-
 const unsigned short version = 1;
 
 struct SaveData {
+    bool first_time;
     unsigned short scrap;
-    unsigned short seeds;
+    unsigned short components;
+    std::unordered_map<std::string, unsigned short> seeds;
     std::vector<Crop> clons;
     std::vector<Planting_Site> planting_sites;
     friend class boost::serialization::access;
     template <typename Archive> void serialize(Archive& ar, const unsigned int version) {
+        ar& first_time;
         ar& scrap;
+        ar& components;
         ar& seeds;
         ar& clons;
         ar& planting_sites;
@@ -110,7 +112,7 @@ public:
         data[current_slot].Lastlogging = time(nullptr);
         data[current_slot].version = version;
         current_data.scrap = 0;
-        current_data.seeds = 0;
+        current_data.first_time = true;
         save_data();
     }
     void save() {

@@ -1,4 +1,8 @@
 ﻿#include "pch.h"
+
+#define endl '\n'
+#define tab '\t'
+
 #include "Utility.h"
 #include "Configs.h"
 #include "LogsSaver.h"
@@ -6,9 +10,6 @@
 #include "Saves.h"
 #include "Planting_Sites.h"
 #include "Game.h"
-
-#define endl '\n'
-#define tab '\t'
 
 void if_empty_create(Language &language, Saves &saves) {
 	if (saves.is_empty()) {
