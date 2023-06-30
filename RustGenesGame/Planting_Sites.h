@@ -7,9 +7,18 @@
 
 class Planting_Site
 {
+	friend class boost::serialization::access;
+	template <typename Archive> void serialize(Archive& ar, const unsigned int version) {
+		ar& plant;
+		ar& height;
+		ar& width;
+		space = height * width;
+	}
+
 	std::vector<std::vector<Crop*>> plant;
 	unsigned short height;
 	unsigned short width;
+	unsigned short space;
 public:
 	Planting_Site()
 	{
@@ -31,16 +40,19 @@ public:
 			}
 		}
 		plant.assign(height, std::vector<Crop*>(width, nullptr));
+		space = height * width;
+	}
+	Planting_Site(unsigned short height, unsigned short width)
+	{
+		
+		this->height = height;
+		this->width = width;		
+		plant.assign(height, std::vector<Crop*>(width, nullptr));
+		space = height * width;
 	}
 	~Planting_Site()
 	{
 		plant.clear();
-	}
-	friend class boost::serialization::access;
-	template <typename Archive> void serialize(Archive& ar, const unsigned int version) {
-		ar& plant;
-		ar& height;
-		ar& width;
 	}
 	void Print() {
 		for (auto& i : plant)
@@ -57,6 +69,9 @@ public:
 			}
 			std::cout << endl;
 		}
+	}
+	unsigned short get_space() {
+		return space;
 	}
 
 };
