@@ -33,6 +33,7 @@
 /.vs
 /x64
 /RustGenesGame/x64
+/enc_temp_folder
 *.sd
 *.si
 *.cfg

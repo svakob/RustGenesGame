@@ -17,6 +17,11 @@ std::string getline() {
     SetConsoleCP(CP_UTF8);
     return str;
 }
+void writelinep(std::string& str) {
+    SetConsoleOutputCP(consoleCP);
+    std::cout << str;
+    SetConsoleOutputCP(CP_UTF8);
+}
 void writeline(std::string &str) {
     SetConsoleOutputCP(consoleCP);
     std::cout << str;
