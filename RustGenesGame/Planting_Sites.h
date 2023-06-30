@@ -13,7 +13,8 @@ class Planting_Site
 public:
 	Planting_Site()
 	{
-
+		height = 0;
+		width = 0;
 	}
 	Planting_Site(std::string size)
 	{

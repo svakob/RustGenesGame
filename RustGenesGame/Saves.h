@@ -2,6 +2,7 @@
 #include "pch.h"
 #include "Crops.h"
 #include "Planting_Sites.h"
+#include "Home.h"
 
 const unsigned short version = 1;
 
@@ -11,7 +12,7 @@ struct SaveData {
     unsigned short components;
     std::unordered_map<std::string, unsigned short> seeds;
     std::vector<Crop> clons;
-    std::vector<Planting_Site> planting_sites;
+    std::vector<Home> homes;
     friend class boost::serialization::access;
     template <typename Archive> void serialize(Archive& ar, const unsigned int version) {
         ar& first_time;
@@ -19,7 +20,7 @@ struct SaveData {
         ar& components;
         ar& seeds;
         ar& clons;
-        ar& planting_sites;
+        ar& homes;
     }
 };
 

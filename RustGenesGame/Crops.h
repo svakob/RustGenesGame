@@ -11,7 +11,11 @@ public:
 	char genes[7]{};
 	Crop()
 	{
-
+		name = "Hemp";
+		for (unsigned short i = 0; i < 6; i++) {
+			genes[i] = AVAILABLE_GENES[randrange(0, 4)];
+		}
+		genes[6] = '\0';
 	}
 	Crop(std::string name)
 	{
