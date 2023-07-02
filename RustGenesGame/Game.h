@@ -2,6 +2,7 @@
 #include "pch.h"
 class Game {
 	unsigned short current_home;
+	bool is_open = true;
 	void print(Language& language, SaveData& data) {
 		std::cout << language["game1"] << ":\t" << data.scrap << '\t' << language["game2"] << ":\t" << data.components << endl;
 	}
@@ -23,10 +24,40 @@ class Game {
 			if (j >= 0 && j < data.homes.size()) {
 				current_home = j;
 				return true;
-				break;
 			}
-			else if (j == '-1') {
-
+			else if (j == data.homes.size()) {
+				current_home = j;
+				std::cout << language["game02"] << tab;
+				std::string name;
+				std::cin >> name;
+				std::string size_;
+				int size;
+				int cost;
+				while (true)
+				{
+					std::cout << language["game10"] << tab;
+					std::cin >> size_;
+					size = std::stoi(size_);
+					if (size > 18) {
+						float result = std::pow(size, 1.1);
+						cost = std::round(result);
+						if (cost <= data.scrap) {
+							data.homes.emplace_back(name, size);
+							data.scrap -= cost;
+							return true;
+						}
+					}
+					else if (size <=18) {
+						if (size <= data.scrap) {
+							data.homes.emplace_back(name, size);
+							data.scrap -= 10;
+							return true;
+						}
+					}
+				}
+			}
+			else if (i == '0') {
+				return false;
 			}
 			else {
 				std::cout << language["game04"] << endl;
@@ -34,8 +65,11 @@ class Game {
 		}
 	}
 public:
-	Game(Configs &configs, LogsSaver &logsaver, Language &language, SaveData &data)
+	Game()
 	{
+		
+	}
+	bool start(Configs& configs, LogsSaver& logsaver, Language& language, SaveData& data) {
 		std::cout << endl << endl;
 		if (data.first_time) {
 			data.first_time = false;
@@ -50,7 +84,7 @@ public:
 			std::cin >> name;
 			data.homes[current_home].name = name;
 			print(language, data);
-			
+
 			std::cout << language["game05"] << endl;
 			std::cout << language["game06"] << tab << data.homes[current_home].free_space << endl;
 			std::cout << language["game07"] << endl;
@@ -71,7 +105,10 @@ public:
 				data.homes[current_home].name = name;
 			}
 			print(language, data);
-			choose_home(language, data);
+			if (!choose_home(language, data)) {
+				return false;
+			}
+			print(language, data);
 			std::cout << language["save11"] << endl << language["save12"] << endl << language["save13"] << endl << language["save14"] << endl;
 			char inputvalue;
 			std::cin >> inputvalue;
@@ -99,5 +136,6 @@ public:
 				continue;
 			}
 		}
+		return true;
 	}
 };

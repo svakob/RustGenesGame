@@ -107,7 +107,9 @@ int main(int argc, char* argv[])
 			break;
 		}
 	}
-	Game game(configs, logsaver, language, saves.getdata());
+	Game game;
+	game.start(configs, logsaver, language, saves.getdata());
+	
 
 	
 
