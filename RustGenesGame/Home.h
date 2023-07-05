@@ -37,7 +37,7 @@ public:
             }
         }
     }
-    void craft_and_place_planting(std::string size) {
+    bool craft_and_place_planting(std::string size) {
         std::string Sheight;
         std::string Swidth;
         auto x = std::find(size.begin(), size.end(), 'x');
@@ -50,7 +50,20 @@ public:
         }
         unsigned short new_space = height * width;
         if (free_space >= new_space) {
+            free_space -= new_space;
             planting_sites.emplace_back(height, width);
+            return true;
         }
+        else {
+            return false;
+        }
+    }
+    void print() {
+        for (auto& i : planting_sites) {
+            i.Print();
+        }
+    }
+    void print(int what) {
+
     }
 };

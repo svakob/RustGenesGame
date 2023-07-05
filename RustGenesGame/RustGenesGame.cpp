@@ -60,7 +60,7 @@ bool welcome_back(Language& language, Saves& saves) {
 		char inputvalue;
 		std::cin >> inputvalue;
 		if (inputvalue == '1') {
-			saves.login(true, 0);
+			saves.load_login(true);
 			return true;
 		}
 		else if (inputvalue == '2') {
@@ -108,8 +108,7 @@ int main(int argc, char* argv[])
 		}
 	}
 	Game game;
-	game.start(configs, logsaver, language, saves.getdata());
-	
+	game.start(configs, logsaver, language, saves);
 
 	
 

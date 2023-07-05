@@ -60,7 +60,7 @@ class Saves {
     unsigned short current_slot = 0;
     bool loaded = false;
 
-    SaveData current_data;
+    std::thread* save_thread;
 
     void ifndeff_folder() {
         if (!std::filesystem::exists(savedatafilePath)) {
@@ -92,7 +92,9 @@ class Saves {
 
 
 public:
+    SaveData current_data;
     std::queue<unsigned short, std::list<unsigned short>> qincorrect_names;
+    std::mutex mtx;
 
     Saves() {
         load();
@@ -161,15 +163,19 @@ public:
     void login(unsigned short slot) {
         current_slot = slot;
     }
-    void login(bool load, int) {
-        loaded = load;
-        load_data();
+    void load_login(bool load) {
+        if (load) {
+            loaded = load;
+            load_data();
+
+        }
     }
     void logout() {
         data[current_slot].Lastlogging = time(nullptr);
         save();
         save_data();
         current_slot = 5;
+        loaded = false;
     }
     bool is_empty_current() {
         return data[current_slot].name.empty();
@@ -183,9 +189,6 @@ public:
         std::remove((savedatafilePath + "save" + std::to_string(current_slot + 1) + ".si").data());
         data[current_slot].name = "";
         current_slot = 0;
-    }
-    SaveData& getdata() {
-        return current_data;
     }
     void print() {
         std::cout << "N\tname\tago\tversion\n";

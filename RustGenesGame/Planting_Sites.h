@@ -55,6 +55,7 @@ public:
 		plant.clear();
 	}
 	void Print() {
+		std::cout << std::to_string(height) + "x" + std::to_string(width) << endl;
 		for (auto& i : plant)
 		{
 			for (auto& j : i) {
@@ -64,7 +65,7 @@ public:
 				}
 				else
 				{
-					writeline("  ø   " + tab);
+					std::cout << "  0   \t";
 				}
 			}
 			std::cout << endl;

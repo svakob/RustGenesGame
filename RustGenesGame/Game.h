@@ -69,46 +69,37 @@ public:
 	{
 		
 	}
-	bool start(Configs& configs, LogsSaver& logsaver, Language& language, SaveData& data) {
+	bool start(Configs& configs, LogsSaver& logsaver, Language& language, Saves& save) {
 		std::cout << endl << endl;
-		if (data.first_time) {
-			data.first_time = false;
+		
+		if (save.current_data.first_time) {
+			save.current_data.first_time = false;
 			std::cout << language["game01"] << endl;
-			data.scrap = 50;
-			data.seeds["Hemp"] = 10;
-			data.components = 20;
-			data.homes.emplace_back("Home", 18);
+			save.current_data.scrap = 50;
+			save.current_data.seeds["Hemp"] = 10;
+			save.current_data.components = 20;
+			save.current_data.homes.emplace_back("Home", 18);
 			current_home = 0;
 			std::cout << language["game02"] << tab;
 			std::string name;
 			std::cin >> name;
-			data.homes[current_home].name = name;
-			print(language, data);
-
-			std::cout << language["game05"] << endl;
-			std::cout << language["game06"] << tab << data.homes[current_home].free_space << endl;
-			std::cout << language["game07"] << endl;
-			std::string size;
-			std::cin >> size;
-			if (size != "0") {
-				data.homes[current_home].craft_and_place_planting(size);
-			}
+			save.current_data.homes[current_home].name = name;
 		}
 		while (true)
 		{
-			if (data.homes.empty()) {
-				data.homes.emplace_back("Home", 18);
+			if (save.current_data.homes.empty()) {
+				save.current_data.homes.emplace_back("Home", 18);
 				current_home = 0;
 				std::cout << language["game02"] << tab;
 				std::string name;
 				std::cin >> name;
-				data.homes[current_home].name = name;
+				save.current_data.homes[current_home].name = name;
 			}
-			print(language, data);
-			if (!choose_home(language, data)) {
+			print(language, save.current_data);
+			if (!choose_home(language, save.current_data)) {
 				return false;
 			}
-			print(language, data);
+			print(language, save.current_data);
 			std::cout << language["save11"] << endl << language["save12"] << endl << language["save13"] << endl << language["save14"] << endl;
 			char inputvalue;
 			std::cin >> inputvalue;
@@ -116,15 +107,15 @@ public:
 				break;
 			}
 			else if (inputvalue == '2') {
-				data.homes[current_home].name = getline();
+				save.current_data.homes[current_home].name = getline();
 			}
 			else if (inputvalue == '3') {
-				if (data.homes.size() > 1) {
+				if (save.current_data.homes.size() > 1) {
 					std::cout << language["save15"] << tab;
 					char confirmation;
 					std::cin >> confirmation;
 					if (confirmation == '1') {
-						data.homes.erase(data.homes.begin() + current_home);
+						save.current_data.homes.erase(save.current_data.homes.begin() + current_home);
 					}
 				}
 				else
@@ -136,6 +127,22 @@ public:
 				continue;
 			}
 		}
+		while (true)
+		{
+			if (save.current_data.homes[current_home].planting_sites.size() == 0) {
+				std::cout << language["game05"] << endl;
+				std::cout << language["game06"] << tab << save.current_data.homes[current_home].free_space << endl;
+				std::cout << language["game07"] << endl;
+				std::string size;
+				std::cin >> size;
+				if (!save.current_data.homes[current_home].craft_and_place_planting(size)) {
+					continue;
+				}
+			}
+			save.current_data.homes[current_home].print();
+			break; 
+		}
+		
 		return true;
 	}
 };
